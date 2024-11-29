@@ -1,6 +1,6 @@
 import Sidebar from './Sidebar'
 import { Outlet } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useEffect, createContext, useState, useContext } from 'react'
 const LandingPage = () => {
   const [isVideoOn, setIsVideoOn] = useState(false)
   const [gazeDataCollection, setGazeDataCollection] = useState([])
@@ -19,6 +19,7 @@ const LandingPage = () => {
     webgazer
       .setGazeListener(listener)
       .setRegression('ridge') // 'weightedRidge' 'threadedRidge'
+      .showVideo(false)
       .begin()
       .then(() => console.log('WebGazer initialized'))
 
@@ -26,10 +27,12 @@ const LandingPage = () => {
       webgazer.clearGazeListener()
     }
   }, [])
+
   return (
     <div>
       <Sidebar />
       <Outlet />
+      <button onClick={() => console.log(gazeDataCollection)}>log data</button>
     </div>
   )
 }

@@ -30,9 +30,7 @@ const Sidebar = () => {
         </li>
         <li className="menu-item" onClick={toggleSuggestions}>
           Suggestion Activity
-          <span className="arrow" onClick={() => navigate('/memoryActivity')}>
-            {isSuggestionsOpen ? '▼' : '▶'}
-          </span>
+          <span className="arrow">{isSuggestionsOpen ? '▼' : '▶'}</span>
         </li>
         {isSuggestionsOpen && (
           <ul className="sub-menu">
