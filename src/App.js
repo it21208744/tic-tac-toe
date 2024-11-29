@@ -1,25 +1,28 @@
-import logo from './logo.svg';
 import './App.css';
+//import TicTacToe from './Components/TicTacToe/TicTacToe';
+//import ImageSlider from './Components/TicTacToe/ImageSlider';
+//import MemoryCard from './Components/TicTacToe/MemoryCard';
+//import LogicGame from './Components/TicTacToe/LogicGame';
+//import Lo from './Components/TicTacToe/Lo';
+import Shadow from './Components/TicTacToe/Shadow';
+//import Home from './Components/TicTacToe/Home';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+     {/*<TicTacToe/>*/}
+     {/*<ImageSlider/>*/}
+     {/*< MemoryCard/>/}
+  {/*<LogicGame/>*/}
+  {/*<Lo/>*/}
+  <Shadow/>
+  {/*<Home/>*/}
+ 
     </div>
   );
 }
 
+
 export default App;
+
