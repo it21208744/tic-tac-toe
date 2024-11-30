@@ -11,12 +11,17 @@ const LandingPage = () => {
   //memory card
   const [accuracy, setAccuracy] = useState(0)
   const [memoryScore, setMemoryScore] = useState(0)
-
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60)
     const remainingSeconds = seconds % 60
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`
   }
+
+  //Logical
+  const [score, setScore] = useState(0)
+  const [errors, setErrors] = useState(0)
+  const [completionTimes, setCompletionTimes] = useState([])
+  const totalTime = completionTimes.reduce((acc, time) => acc + time, 0)
 
   useEffect(() => {
     const listener = (data, elapsedTime) => {
@@ -50,6 +55,13 @@ const LandingPage = () => {
           memoryScore,
           setMemoryScore,
           formatTime,
+          score,
+          setScore,
+          errors,
+          setErrors,
+          totalTime,
+          completionTimes,
+          setCompletionTimes,
         }}
       >
         <Outlet />
