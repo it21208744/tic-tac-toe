@@ -8,6 +8,7 @@ import Shadow from './Components/TicTacToe/Shadow'
 import LogicGame from './Components/TicTacToe/LogicGame'
 import TicTacToe from './Components/TicTacToe/TicTacToe'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import AllResults from './Components/TicTacToe/AllResults'
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
       { path: '/memory', element: <ImageSlider /> },
       { path: '/attention', element: <LogicGame /> },
       { path: '/logic', element: <TicTacToe /> },
+      { path: '/results', element: <AllResults /> },
     ],
   },
 ])

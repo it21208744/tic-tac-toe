@@ -28,6 +28,9 @@ const Sidebar = () => {
         <li className="menu-item" onClick={() => navigate('/logicThinking')}>
           Logic Thinking
         </li>
+        <li className="menu-item" onClick={() => navigate('/results')}>
+          Results
+        </li>
         <li className="menu-item" onClick={toggleSuggestions}>
           Suggestion Activity
           <span className="arrow">{isSuggestionsOpen ? '▼' : '▶'}</span>

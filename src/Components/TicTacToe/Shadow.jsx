@@ -190,6 +190,7 @@ const patterns = [
 ]
 
 const ShadowGame = () => {
+  const webgazer = window.webgazer
   const {
     shadowScore,
     setShadowScore,
@@ -234,18 +235,22 @@ const ShadowGame = () => {
       } else {
         // navigate('/logicThinking')
         alert(`Game over! Final Score: ${shadowScore}`)
+        setGazeShiftsCount(countTimesOutsideArea(gazeDataCollection))
+        setFixationDuration(timeToFirstGaze(gazeDataCollection / 1000))
       }
     }, 1500)
   }
 
   const handleSubmit = () => {
+    webgazer.pause()
+
     const data = [
       {
         Attention_Score: shadowScore,
         'Time Elapsed (seconds)': timeElapsed,
         'Patterns Completed': completedPatterns.length,
-        Gaze_Shifts_Count: countTimesOutsideArea(gazeDataCollection),
-        'Fixation_Duration (s)': timeToFirstGaze(gazeDataCollection) / 1000,
+        Gaze_Shifts_Count: gazeShiftsCount,
+        'Fixation_Duration (s)': fixationDuration,
       },
     ]
 
