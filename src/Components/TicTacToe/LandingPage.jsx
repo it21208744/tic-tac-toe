@@ -1,10 +1,22 @@
 import Sidebar from './Sidebar'
 import { Outlet } from 'react-router-dom'
 import { useEffect, createContext, useState, useContext } from 'react'
+
+export const DataContext = createContext(null)
 const LandingPage = () => {
   const [isVideoOn, setIsVideoOn] = useState(false)
   const [gazeDataCollection, setGazeDataCollection] = useState([])
   const webgazer = window.webgazer
+
+  //memory card
+  const [accuracy, setAccuracy] = useState(0)
+  const [memoryScore, setMemoryScore] = useState(0)
+
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60)
+    const remainingSeconds = seconds % 60
+    return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`
+  }
 
   useEffect(() => {
     const listener = (data, elapsedTime) => {
@@ -31,7 +43,17 @@ const LandingPage = () => {
   return (
     <div>
       <Sidebar />
-      <Outlet />
+      <DataContext.Provider
+        value={{
+          accuracy,
+          setAccuracy,
+          memoryScore,
+          setMemoryScore,
+          formatTime,
+        }}
+      >
+        <Outlet />
+      </DataContext.Provider>
       <button onClick={() => console.log(gazeDataCollection)}>log data</button>
     </div>
   )
