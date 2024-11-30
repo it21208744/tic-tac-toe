@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import * as XLSX from 'xlsx'
 import './Shadow.css'
 import { useNavigate } from 'react-router-dom'
-
+import { DataContext } from './LandingPage'
+import { timeToFirstGaze, countTimesOutsideArea } from './webgazerFunctions'
 // Updated patterns with correct file paths
 const patterns = [
   {
@@ -189,15 +190,28 @@ const patterns = [
 ]
 
 const ShadowGame = () => {
+  const {
+    shadowScore,
+    setShadowScore,
+    timeElapsed,
+    setTimeElapsed,
+    completedPatterns,
+    setCompletedPatterns,
+    gazeShiftsCount,
+    setGazeShiftsCount,
+    fixationDuration,
+    setFixationDuration,
+    gazeDataCollection,
+    setGazeDataCollection,
+  } = useContext(DataContext)
   const navigate = useNavigate()
   const [currentPattern, setCurrentPattern] = useState(0)
-  const [score, setScore] = useState(100)
-  const [timeElapsed, setTimeElapsed] = useState(0)
+
   const [feed, setFeed] = useState('')
   const [isDisabled, setIsDisabled] = useState(false)
-  const [completedPatterns, setCompletedPatterns] = useState([])
 
   useEffect(() => {
+    setGazeDataCollection([])
     const timer = setInterval(() => {
       setTimeElapsed((prev) => prev + 1)
     }, 1000)
@@ -209,7 +223,7 @@ const ShadowGame = () => {
     setIsDisabled(true)
     const isCorrect = index === patterns[currentPattern].correctIndex
     setFeed(isCorrect ? 'You are correct!' : 'You are wrong!')
-    if (!isCorrect) setScore((prevScore) => prevScore - 10)
+    if (!isCorrect) setShadowScore((prevScore) => prevScore - 10)
 
     setTimeout(() => {
       setFeed('')
@@ -219,7 +233,7 @@ const ShadowGame = () => {
         setCurrentPattern((prev) => prev + 1)
       } else {
         // navigate('/logicThinking')
-        alert(`Game over! Final Score: ${score}`)
+        alert(`Game over! Final Score: ${shadowScore}`)
       }
     }, 1500)
   }
@@ -227,11 +241,11 @@ const ShadowGame = () => {
   const handleSubmit = () => {
     const data = [
       {
-        Attention_Score: score,
+        Attention_Score: shadowScore,
         'Time Elapsed (seconds)': timeElapsed,
         'Patterns Completed': completedPatterns.length,
-        Gaze_Shifts_Count: 0,
-        'Fixation_Duration (s)': 0.0,
+        Gaze_Shifts_Count: countTimesOutsideArea(gazeDataCollection),
+        'Fixation_Duration (s)': timeToFirstGaze(gazeDataCollection) / 1000,
       },
     ]
 
@@ -247,7 +261,7 @@ const ShadowGame = () => {
     <div className="shadow-game">
       <div className="header">
         <h1>Shadow Matching Game</h1>
-        <div>Score: {score}</div>
+        <div>Score: {shadowScore}</div>
         <div>Time Elapsed: {timeElapsed} seconds</div>
       </div>
       {feed && <div className="feed">{feed}</div>}

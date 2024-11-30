@@ -23,6 +23,13 @@ const LandingPage = () => {
   const [completionTimes, setCompletionTimes] = useState([])
   const totalTime = completionTimes.reduce((acc, time) => acc + time, 0)
 
+  //Shadow
+  const [shadowScore, setShadowScore] = useState(100)
+  const [timeElapsed, setTimeElapsed] = useState(0)
+  const [completedPatterns, setCompletedPatterns] = useState([])
+  const [gazeShiftsCount, setGazeShiftsCount] = useState('')
+  const [fixationDuration, setFixationDuration] = useState([])
+
   useEffect(() => {
     const listener = (data, elapsedTime) => {
       if (data) {
@@ -62,6 +69,18 @@ const LandingPage = () => {
           totalTime,
           completionTimes,
           setCompletionTimes,
+          shadowScore,
+          setShadowScore,
+          timeElapsed,
+          setTimeElapsed,
+          completedPatterns,
+          setCompletedPatterns,
+          gazeShiftsCount,
+          setGazeShiftsCount,
+          fixationDuration,
+          setFixationDuration,
+          gazeDataCollection,
+          setGazeDataCollection,
         }}
       >
         <Outlet />

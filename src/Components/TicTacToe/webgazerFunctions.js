@@ -1,22 +1,37 @@
-export function calculateTimeInArea(data) {
-  // Destructure the area boundaries
+const xMin = 598
+const xMax = 1351
+const yMin = 161
+const yMax = 701
 
-  const xMin = 598
-  const xMax = 1351
-  const yMin = 161
-  const yMax = 701
-  // Initialize the total time spent in the area
-  let totalTime = 0
+export function timeToFirstGaze(gazeData) {
+  let cumulativeTime = 0
 
-  // Loop through each data point
-  data.forEach((point) => {
-    const { x, y, time } = point
+  for (let i = 0; i < gazeData.length; i++) {
+    const { x, y, time } = gazeData[i]
 
-    // Check if the point is within the rectangle area
+    cumulativeTime += time
+
     if (x >= xMin && x <= xMax && y >= yMin && y <= yMax) {
-      totalTime += time
+      return cumulativeTime
     }
+  }
+
+  return -1
+}
+
+export function countTimesOutsideArea(gazeData) {
+  let isInsideArea = false
+  let countOutside = 0
+
+  gazeData.forEach(({ x, y }) => {
+    const insideArea = x >= xMin && x <= xMax && y >= yMin && y <= yMax
+
+    if (isInsideArea && !insideArea) {
+      countOutside++
+    }
+
+    isInsideArea = insideArea
   })
 
-  return totalTime
+  return countOutside
 }
